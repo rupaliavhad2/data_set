@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jun 11 10:13:16 2019
+
+@author: DELL
+"""
+import numpy as np
+
+import pandas as pd
+#%% SERIES 
+data=np.array([101,102,103,104])
+s=pd.Series(data)
+print(s)
+print()
+
+print(s[1])
+s[1]=100
+print(s)
+##if we assigning row lables as index number that means we have both row lable and index number
+##when we assign index number that means we over write
+s=pd.Series(data.index=["a","b","c","d"])
+print(s)
+print(s["b"])
+print(s[1])
+#%%
+list1=np.arange(1001,1005,1)
+s=pd.Series(data,index=list1)
+print(s)
+print(s[1002])
+print(s[1])   ##this will give error 
+#%%
+data={'a':0.,'b':1.,'c':2.}
+s=pd.Series(data)
+print(s)
+
+print(s['a'])
+print()
+print(s[-2:])
+
+#%%
+#DATA Frames
+data=[['Amit',40],['Nikita',23],['Clara',33]]
+df=pd.DataFrame(data)
+print(df)
+
+#df.columns=["name","Age"]
+#print(df)
+#%%
+#index data frame from dict
+data={'Name':['Amit','Nikita','Clara'],'Age':[40,23,33]}
+df=pd.DataFrame(data)
+print(df)
+
+df=pd.DataFrame(data,index=['rank1','rank2','rank3'])
+print(df)
+  
+#%%
+##multiple variable names
+df["Name"]
+df[["Name","Age"]]
+##Adding new variable(column) 
+df['address']=["Mumbai","Pune","Mumbai"]
+df
+##
+df=df[["Name","address","Age"]]
+df
+
+#%%
+df["Newcol"]=[5,10,12]   ##if we write df["Newcol"]=5 it means that column take value 5
+print(df)
+
+df["Revised_Col"]=df["Newcol"]*2
+print(df)
+#%%
+#deleting  a column
+del df['Newcol']
+print(df)
+#%%
+#%drop a particular row and observation
+df=df.drop('rank1')
+df=df.drop('Revised_Col',axis=1)  ##axis is used while dropping variable
+print(df)
+#%%
+#Accessing data elements using indexes and lables
+#df.Loc[inclusive:exclusive]
+print(df.loc['rank2'])
+
+print(df.loc['rank2':'rank3'])
+#df.loc[inclusive:exclusive]
+#print(df)
+print(df.iloc[0:1])  ##
+
+print(df.loc["rank2":"rank3",["address","Age"]])
+print(df.iloc[:,[1,2]])
+##loc is used for row lable and column lable
+#iloc is for index number
+#%%
+df['Name']
+#viewing a subset
+df[["Name","Age"]]
+#%%
+#saving df to file
+#df.to_csv(r'C:\Users\DELL\Desktop\supriya\sampledf.csv',index=True,header=True)
+
+df.to_excel('sampledf.xlsx',index=False,header=True)
+print('done')
+#%%%
+#reading df from a file
+df2=pd.read_csv(r'C:\Users\DELL\Desktop\supriya\sampledf.csv',index_col=1,header=0)
+print(df2)
+##when you are dealing where index number handal them 
+##whe you take data from internet and there is no header in data then write header=none
+df3=pd.read_excel('sampledf.xlsx')
+print(df3)
+#%%Preparing the data
+#print(df.dtypes)
+#print(df.Age.dtype)
+#print(df.shape)
+df.info()
+#%%
+df.set_value('rank4',['Name','Age'],["Ramesh",40])
+
